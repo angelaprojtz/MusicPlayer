@@ -255,7 +255,7 @@ QLineEdit {
      <string notr="true">color: rgb(140, 0, 255);</string>
     </property>
     <property name="text">
-     <string>50%:</string>
+     <string>50%</string>
     </property>
    </widget>
    <widget class="QLabel" name="nowPlayingActual">
@@ -263,7 +263,7 @@ QLineEdit {
      <rect>
       <x>420</x>
       <y>440</y>
-      <width>91</width>
+      <width>341</width>
       <height>16</height>
      </rect>
     </property>
@@ -274,7 +274,7 @@ QLineEdit {
      <string>None</string>
     </property>
    </widget>
-   <widget class="QLabel" name="volumeLabel_2">
+   <widget class="QLabel" name="progressCurr">
     <property name="geometry">
      <rect>
       <x>470</x>
@@ -287,7 +287,7 @@ QLineEdit {
      <string>0:00</string>
     </property>
    </widget>
-   <widget class="QLabel" name="volumeLabel_3">
+   <widget class="QLabel" name="progressSeparator">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -311,6 +311,19 @@ QLineEdit {
     </property>
     <property name="text">
      <string>0:00</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="songImg">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>70</y>
+      <width>331</width>
+      <height>331</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>(Song cover img)</string>
     </property>
    </widget>
   </widget>
