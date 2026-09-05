@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
+#include <QFileInfo>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,6 +18,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_addButton_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Select audio file"), "/home", tr("Audio Files (*.mp3 *.wav)"));
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Select Audio Files"), "/home", tr("Audio Files (*.mp3 *.wav)"));
+
+    for(const QString &currFile : fileNames){
+        QFileInfo fi(currFile);
+        QString name = fi.fileName();
+
+        ui->listWidget->addItem(name);
+
+        qDebug() << name;
+    }
 }
 
+
+void MainWindow::on_remButton_clicked()
+{
+    QListWidgetItem *it = ui->listWidget->takeItem(ui->listWidget->currentRow());
+    delete it;
+}
