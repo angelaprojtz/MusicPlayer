@@ -16,6 +16,10 @@ MainWindow::MainWindow(QWidget *parent)
     player = new QMediaPlayer(this); //The player is built once when the window opens, not every time someone hits play.
     audioOutput = new QAudioOutput(this);
     player->setAudioOutput(audioOutput);
+
+    ui->volumeSlider->setMinimum(0.0);
+    ui->volumeSlider->setMaximum(100.0);
+    ui->volumeSlider->setValue(50.0);
 }
 
 MainWindow::~MainWindow()
@@ -49,9 +53,16 @@ void MainWindow::on_remButton_clicked()
 void MainWindow::on_playButton_clicked()
 {
     QListWidgetItem *item = ui->listWidget->currentItem();
-    if (!item)
-        return;
 
+    QString path = item->data(Qt::UserRole).toString();
+    player->setSource(QUrl::fromLocalFile(path));
+    player->play();
+
+    ui->nowPlayingActual->setText(item->text());
+}
+
+void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+{
     QString path = item->data(Qt::UserRole).toString();
     player->setSource(QUrl::fromLocalFile(path));
     player->play();
@@ -63,5 +74,19 @@ void MainWindow::on_playButton_clicked()
 void MainWindow::on_pauseButton_clicked()
 {
     player->pause();
+}
+
+
+void MainWindow::on_progressSlider_valueChanged(int value)
+{
+
+}
+
+
+void MainWindow::on_volumeSlider_valueChanged(int value)
+{
+    audioOutput->setVolume(value/100.0);
+
+    ui->volumeValue->setText(QString::number(value) + "%");
 }
 
