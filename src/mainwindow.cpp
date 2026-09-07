@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    setWindowTitle("Music Player");
+
     player = new QMediaPlayer(this); //The player is built once when the window opens, not every time someone hits play.
     audioOutput = new QAudioOutput(this);
     player->setAudioOutput(audioOutput);

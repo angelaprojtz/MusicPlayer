@@ -72,6 +72,15 @@ QLineEdit {
       <height>351</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QListWidget {
+	color: rgb(255, 0, 255);
+}
+
+QListWidget::item:selected {
+	color: rgb(85, 255, 255);
+}</string>
+    </property>
    </widget>
    <widget class="Line" name="horizLine">
     <property name="geometry">
@@ -278,7 +287,7 @@ QLineEdit {
     <property name="geometry">
      <rect>
       <x>470</x>
-      <y>540</y>
+      <y>550</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -291,7 +300,7 @@ QLineEdit {
     <property name="geometry">
      <rect>
       <x>510</x>
-      <y>540</y>
+      <y>550</y>
       <width>16</width>
       <height>16</height>
      </rect>
@@ -304,7 +313,7 @@ QLineEdit {
     <property name="geometry">
      <rect>
       <x>530</x>
-      <y>540</y>
+      <y>550</y>
       <width>71</width>
       <height>16</height>
      </rect>
@@ -323,7 +332,7 @@ QLineEdit {
      </rect>
     </property>
     <property name="text">
-     <string>(Song cover img)</string>
+     <string>(Visualizer will go here)</string>
     </property>
    </widget>
   </widget>
