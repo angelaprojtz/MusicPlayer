@@ -89,13 +89,28 @@ void MainWindow::on_remButton_clicked()
 
 void MainWindow::on_playButton_clicked()
 {
-    QListWidgetItem *item = ui->listWidget->currentItem();
+    if (player->playbackState() == QMediaPlayer::PausedState)
+    {
+        player->play();
 
-    QString path = item->data(Qt::UserRole).toString();
-    player->setSource(QUrl::fromLocalFile(path));
-    player->play();
+        return;
+    }
+    else if (player->playbackState() == QMediaPlayer::PlayingState ||
+             player->playbackState() == QMediaPlayer::StoppedState)
+    {
+        return;
+    }
 
-    ui->nowPlayingActual->setText(item->text());
+    else {
+
+        QListWidgetItem *item = ui->listWidget->currentItem();
+
+        QString path = item->data(Qt::UserRole).toString();
+        player->setSource(QUrl::fromLocalFile(path));
+        player->play();
+
+        ui->nowPlayingActual->setText(item->text());
+    }
 }
 
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
@@ -126,3 +141,53 @@ void MainWindow::on_volumeSlider_valueChanged(int value)
 
     ui->volumeValue->setText(QString::number(value) + "%");
 }
+
+void MainWindow::on_searchButton_clicked()
+{
+    QString searchText = ui->searchSong->text();
+
+    for (int i = 0; i < ui->listWidget->count(); ++i) {
+        QListWidgetItem *item = ui->listWidget->item(i);
+        bool match = item->text().contains(searchText, Qt::CaseInsensitive);
+        item->setHidden(!match);
+    }
+}
+
+
+void MainWindow::on_prevButton_clicked()
+{
+    int currentRow = ui->listWidget->currentRow();
+    int earlierRow = currentRow - 1;
+
+    if (earlierRow >= 0) {
+        ui->listWidget->setCurrentRow(earlierRow);
+    }
+
+    QListWidgetItem *item = ui->listWidget->currentItem();
+
+    QString path = item->data(Qt::UserRole).toString();
+    player->setSource(QUrl::fromLocalFile(path));
+    player->play();
+
+    ui->nowPlayingActual->setText(item->text());
+}
+
+
+void MainWindow::on_skipButton_clicked()
+{
+    int currentRow = ui->listWidget->currentRow();
+    int nextRow = currentRow + 1;
+
+    if (nextRow < ui->listWidget->count()) {
+        ui->listWidget->setCurrentRow(nextRow);
+    }
+
+    QListWidgetItem *item = ui->listWidget->currentItem();
+
+    QString path = item->data(Qt::UserRole).toString();
+    player->setSource(QUrl::fromLocalFile(path));
+    player->play();
+
+    ui->nowPlayingActual->setText(item->text());
+}
+

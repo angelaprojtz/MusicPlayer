@@ -92,7 +92,7 @@ QLineEdit {
       <x>300</x>
       <y>10</y>
       <width>20</width>
-      <height>461</height>
+      <height>451</height>
      </rect>
     </property>
     <property name="orientation">

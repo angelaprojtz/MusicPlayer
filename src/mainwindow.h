@@ -40,6 +40,12 @@ private slots:
 
     void on_volumeSlider_valueChanged(int value);
 
+    void on_searchButton_clicked();
+
+    void on_prevButton_clicked();
+
+    void on_skipButton_clicked();
+
 private:
     void updateduration(qint64 duration);
     Ui::MainWindow *ui;
