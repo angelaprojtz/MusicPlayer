@@ -20,11 +20,48 @@ MainWindow::MainWindow(QWidget *parent)
     ui->volumeSlider->setMinimum(0.0);
     ui->volumeSlider->setMaximum(100.0);
     ui->volumeSlider->setValue(50.0);
+
+    connect(player, &QMediaPlayer::durationChanged, this, &MainWindow::durationChanged);
+    connect(player, &QMediaPlayer::positionChanged, this, &MainWindow::positionChanged);
+
+    ui->progressSlider->setRange(0,player->duration() / 1000);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::updateduration(qint64 duration)
+{
+    QString timeString;
+    if (duration || Mduration)
+    {
+        QTime CurrentTime((duration / 3600) % 60, (duration / 60) % 60, duration % 60, (duration * 1000) % 1000);
+        QTime totalTime((Mduration / 3600) % 60, (Mduration / 60) % 60, Mduration % 60, (Mduration * 1000) % 1000);
+
+        QString format = "mm:ss";
+        if (Mduration > 3600)
+            format = "hh:mm:ss";
+        ui->progressCurr->setText(CurrentTime.toString(format));
+        ui->fullDurationLabel->setText(totalTime.toString(format));
+    }
+}
+
+void MainWindow::durationChanged(qint64 duration)
+{
+    Mduration = duration / 1000;
+    ui->progressSlider->setMaximum(Mduration);
+}
+
+void MainWindow::positionChanged(qint64 progress)
+{
+    if (!ui->progressSlider->isSliderDown())
+    {
+        ui->progressSlider->setValue(progress / 1000);
+    }
+
+    updateduration(progress / 1000);
 }
 
 void MainWindow::on_addButton_clicked()
@@ -77,9 +114,9 @@ void MainWindow::on_pauseButton_clicked()
 }
 
 
-void MainWindow::on_progressSlider_valueChanged(int value)
+void MainWindow::on_progressSlider_sliderReleased()
 {
-
+    player->setPosition(ui->progressSlider->value() * 1000);
 }
 
 
@@ -89,4 +126,3 @@ void MainWindow::on_volumeSlider_valueChanged(int value)
 
     ui->volumeValue->setText(QString::number(value) + "%");
 }
-

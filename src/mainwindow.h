@@ -22,6 +22,10 @@ public:
     ~MainWindow() override;
 
 private slots:
+    void durationChanged(qint64 duration);
+
+    void positionChanged(qint64 progress);
+
     void on_addButton_clicked();
 
     void on_remButton_clicked();
@@ -32,14 +36,16 @@ private slots:
 
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
-    void on_progressSlider_valueChanged(int value);
+    void on_progressSlider_sliderReleased();
 
     void on_volumeSlider_valueChanged(int value);
 
 private:
+    void updateduration(qint64 duration);
     Ui::MainWindow *ui;
     QMediaPlayer *player;
     QAudioOutput *audioOutput;
+    qint64 Mduration;
 
 };
 #endif // MAINWINDOW_H
